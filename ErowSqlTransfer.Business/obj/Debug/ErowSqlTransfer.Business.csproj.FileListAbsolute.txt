@@ -1,0 +1,14 @@
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\ErowSqlTransfer.Business.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\ErowSqlTransfer.Business.pdb
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\ErowSqlTransfer.DataAccess.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\log4net.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\Newtonsoft.Json.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\Microsoft.Practices.ObjectBuilder.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\ErowSqlTransfer.DataAccess.pdb
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\log4net.xml
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\bin\Debug\Newtonsoft.Json.xml
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\obj\Debug\ErowSqlTransfer.Business.csprojResolveAssemblyReference.cache
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\obj\Debug\ErowSqlTransfer.Business.dll
+C:\git\ErowSqlTransfer\ErowSqlTransfer.Business\obj\Debug\ErowSqlTransfer.Business.pdb
