@@ -1,8 +1,0 @@
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\bin\Debug\ErowSqlTransfer.DataAccess.dll
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\bin\Debug\ErowSqlTransfer.DataAccess.pdb
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\bin\Debug\Microsoft.Practices.ObjectBuilder.dll
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\obj\Debug\ErowSqlTransfer.DataAccess.csprojResolveAssemblyReference.cache
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\obj\Debug\ErowSqlTransfer.DataAccess.dll
-C:\git\ErowSqlTransfer\ErowSqlTransfer.DataAccess\obj\Debug\ErowSqlTransfer.DataAccess.pdb
