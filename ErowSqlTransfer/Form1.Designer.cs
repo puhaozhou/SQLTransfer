@@ -74,9 +74,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TextBox textBox1;
+        protected System.Windows.Forms.Button button1;
+        protected System.Windows.Forms.ProgressBar progressBar1;
+        protected System.Windows.Forms.TextBox textBox1;
     }
 }
 
