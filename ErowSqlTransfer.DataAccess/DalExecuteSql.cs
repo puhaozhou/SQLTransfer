@@ -11,8 +11,9 @@ namespace ErowSqlTransfer.DataAccess
 {
     public class DalExecuteSql
     {
-        public const string SqlConnectionName = "CT";
-        public const string OracleConnectionName = "DATA1";
+        public const string SqlConnectionName = "MsSqlConn";
+        public const string OracleConnectionName = "OracleConn";
+        public static readonly string[] Heads = {"ADM"};
 
         /// <summary>
         /// 获取库ct_ct中ct和jxc的表名
@@ -27,10 +28,13 @@ namespace ErowSqlTransfer.DataAccess
             DataSet ds = db.ExecuteDataSet(cmd);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                if (dr["name"].ToString().Substring(0, 2).ToUpper().Equals("CT") ||
-                    dr["name"].ToString().Substring(0, 3).ToUpper().Equals("JXC"))
+                foreach (var head in Heads)
                 {
-                    result.Add(dr["name"].ToString());
+                    if (dr["name"].ToString().Length >= head.Length &&
+                        dr["name"].ToString().Substring(0, head.Length).ToUpper().Equals(head))
+                    {
+                        result.Add(dr["name"].ToString());
+                    }
                 }
             }
             return result.OrderBy(p=>p).ToList();
@@ -43,13 +47,13 @@ namespace ErowSqlTransfer.DataAccess
         /// <returns></returns>
         public static DataSet GetCtDataByTableName(string tableName)
         {
-            if (tableName.Substring(0, 2).ToUpper().Equals("CT"))
+            foreach (var head in Heads)
             {
-                tableName = "ct." + tableName;
-            }
-            if (tableName.Substring(0, 3).ToUpper().Equals("JXC"))
-            {
-                tableName = "jxc." + tableName;
+                if (tableName.Length >= head.Length && 
+                    tableName.Substring(0, head.Length).ToUpper().Equals(head))
+                {
+                    tableName = head.ToLower() + "." + tableName;
+                }
             }
             var sql = $"SELECT * FROM {tableName} WITH (NOLOCK)";
             Database db = DatabaseFactory.CreateDatabase(SqlConnectionName);

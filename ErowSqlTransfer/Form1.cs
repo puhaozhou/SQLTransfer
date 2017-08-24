@@ -62,13 +62,17 @@ namespace ErowSqlTransfer
                         {
                             item.Result = $"{tableName.ToUpper()}表不存在";
                             result.Add(item);
+                            lock (progressBar1)
+                            {
+                                progressBar1.Value++;
+                            }
                             return;
                         }
                         var ctData = DalExecuteSql.GetCtDataByTableName(tableName);
                         if (ctData != null && ctData.Tables[0].Rows.Count > 0)
                         {
                             var columnInfo = manager.GetTableColumnNameAndDataType(ctData);
-                            Database db = DatabaseFactory.CreateDatabase("DATA1"); //链接到Oracle
+                            Database db = DatabaseFactory.CreateDatabase("OracleConn"); //链接到Oracle
                             using (DbConnection connection = db.CreateConnection())
                             {
                                 connection.Open();
