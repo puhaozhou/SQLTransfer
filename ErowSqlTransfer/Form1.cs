@@ -23,6 +23,7 @@ namespace ErowSqlTransfer
         public Form1()
         {
             InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -62,9 +63,10 @@ namespace ErowSqlTransfer
                         {
                             item.Result = $"{tableName.ToUpper()}表不存在";
                             result.Add(item);
-                            lock (progressBar1)
+                            lock (this)
                             {
                                 progressBar1.Value++;
+                                textBox1.AppendText($"已完成表：{tableName.ToUpper()}，操作结果：{item.Result}\r\n");
                             }
                             return;
                         }
@@ -108,9 +110,10 @@ namespace ErowSqlTransfer
                             item.Result = "Sql Server表中暂无数据";
                         }
                         result.Add(item);
-                        lock (progressBar1)
+                        lock (this)
                         {
                             progressBar1.Value++;
+                            textBox1.AppendText($"已完成表：{tableName.ToUpper()}，操作结果：{item.Result}\r\n");
                         }
                     }
                 });

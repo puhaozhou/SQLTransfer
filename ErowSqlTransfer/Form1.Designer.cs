@@ -1,4 +1,6 @@
-﻿namespace ErowSqlTransfer
+﻿using System.Windows.Forms;
+
+namespace ErowSqlTransfer
 {
     partial class Form1
     {
@@ -35,7 +37,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(178, 199);
+            this.button1.Location = new System.Drawing.Point(491, 387);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(173, 65);
             this.button1.TabIndex = 0;
@@ -47,21 +49,23 @@
             // 
             this.progressBar1.Location = new System.Drawing.Point(12, 59);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(339, 23);
+            this.progressBar1.Size = new System.Drawing.Size(652, 46);
             this.progressBar1.TabIndex = 1;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 111);
+            this.textBox1.Location = new System.Drawing.Point(12, 142);
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(339, 28);
-            this.textBox1.TabIndex = 2;           
+            this.textBox1.Size = new System.Drawing.Size(652, 211);
+            this.textBox1.TabIndex = 2;
+            this.textBox1.ScrollBars = ScrollBars.Vertical;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(363, 381);
+            this.ClientSize = new System.Drawing.Size(676, 572);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button1);

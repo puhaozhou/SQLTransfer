@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.Practices.EnterpriseLibrary.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.EnterpriseLibrary.Data;
 
 namespace ErowSqlTransfer.DataAccess
 {
@@ -13,7 +11,7 @@ namespace ErowSqlTransfer.DataAccess
     {
         public const string SqlConnectionName = "MsSqlConn";
         public const string OracleConnectionName = "OracleConn";
-        public static readonly string[] Heads = {"ADM"};
+        public static readonly string[] Heads = {"CT","JXC"};
 
         /// <summary>
         /// 获取库ct_ct中ct和jxc的表名
