@@ -103,6 +103,7 @@ namespace ErowSqlTransfer
                                         item.Error = ex.Message;
                                     }
                                 }
+                                connection.Close();
                             }
                         }
                         else
