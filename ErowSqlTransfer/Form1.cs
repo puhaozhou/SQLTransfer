@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ErowSqlTransfer.Business;
@@ -19,6 +20,8 @@ namespace ErowSqlTransfer
     public partial class Form1 : Form
     {
         readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(Form1));
+        public readonly  List<string> TableNamesList = new List<string>{ "ADM_YCSQ_REDISPATCH","ADM_YCSQ_HEAD_DEL" };
+        public readonly bool OverAllMode = true;
 
         public Form1()
         {
@@ -28,7 +31,8 @@ namespace ErowSqlTransfer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            button1.Enabled = false;            
+            button1.Enabled = false;
+            textBox1.Clear();
             Thread thread = new Thread(InsertDataIntoOracle);
             thread.Start();
         }
@@ -39,7 +43,7 @@ namespace ErowSqlTransfer
             var result = new List<ExecuteResult>();
             try
             {
-                var ctTableNames = DalExecuteSql.GetTableNameOfCt();
+                var ctTableNames = OverAllMode ? DalExecuteSql.GetTableNameOfCt() : TableNamesList;
                 progressBar1.Minimum = 0;
                 progressBar1.Maximum = ctTableNames.Count;
                 progressBar1.Value = 0;
@@ -55,6 +59,8 @@ namespace ErowSqlTransfer
                             TableName = tableName.ToUpper(),
                             Result = "Success"
                         };
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
                         if (DalExecuteSql.IsExistOracleTable(tableName)) //判断Oracle中是否存在该表
                         {
                             DalExecuteSql.TrunCateOracleTable(tableName); //清空表内数据
@@ -63,10 +69,11 @@ namespace ErowSqlTransfer
                         {
                             item.Result = $"{tableName.ToUpper()}表不存在";
                             result.Add(item);
+                            stopwatch.Stop();
                             lock (this)
                             {
                                 progressBar1.Value++;
-                                textBox1.AppendText($"已完成表：{tableName.ToUpper()}，操作结果：{item.Result}\r\n");
+                                textBox1.AppendText($"已完成表：{tableName.ToUpper()}，操作结果：{item.Result},用时：{stopwatch.Elapsed.TotalSeconds:0.00} s\r\n");
                             }
                             return;
                         }
@@ -111,10 +118,11 @@ namespace ErowSqlTransfer
                             item.Result = "Sql Server表中暂无数据";
                         }
                         result.Add(item);
+                        stopwatch.Stop();
                         lock (this)
                         {
                             progressBar1.Value++;
-                            textBox1.AppendText($"已完成表：{tableName.ToUpper()}，操作结果：{item.Result}\r\n");
+                            textBox1.AppendText($"已完成表：{tableName.ToUpper()}，操作结果：{item.Result},用时：{stopwatch.Elapsed.TotalSeconds:0.00} s\r\n");
                         }
                     }
                 });
