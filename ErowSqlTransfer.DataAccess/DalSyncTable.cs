@@ -1,27 +1,28 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Text;
+using ErowSqlTransfer.DataAccess.Entity;
 
 namespace ErowSqlTransfer.DataAccess
 {
-    public class DalExecuteSql
+    public class DalSyncTable
     {
-        public const string SqlConnectionName = "MsSqlConn";
-        public const string OracleConnectionName = "OracleConn";
-        public static readonly string[] Heads = {"CT","JXC"};
+        public static readonly string[] Heads = {"ADM"};
 
         /// <summary>
         /// 获取库ct_ct中ct和jxc的表名
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetTableNameOfCt()
+        public static List<string> GetTableNames()
         {
             List<string> result = new List<string>();
             var sql = @"SELECT name FROM sysobjects WITH (NOLOCK) WHERE type = 'u'";
-            Database db = DatabaseFactory.CreateDatabase(SqlConnectionName);
+            Database db = DatabaseFactory.CreateDatabase(Constant.SqlConnectionName);
             DbCommand cmd = db.GetSqlStringCommand(sql);
             DataSet ds = db.ExecuteDataSet(cmd);
             foreach (DataRow dr in ds.Tables[0].Rows)
@@ -54,7 +55,7 @@ namespace ErowSqlTransfer.DataAccess
                 }
             }
             var sql = $"SELECT * FROM {tableName} WITH (NOLOCK)";
-            Database db = DatabaseFactory.CreateDatabase(SqlConnectionName);
+            Database db = DatabaseFactory.CreateDatabase(Constant.SqlConnectionName);
             DbCommand cmd = db.GetSqlStringCommand(sql);
             var result = db.ExecuteDataSet(cmd);
             return result;
@@ -64,7 +65,7 @@ namespace ErowSqlTransfer.DataAccess
         {
             var result = false;
             var sql = $" SELECT COUNT(*) FROM USER_TABLES WHERE table_name = '{tableName.ToUpper()}'";
-            Database db = DatabaseFactory.CreateDatabase(OracleConnectionName);
+            Database db = DatabaseFactory.CreateDatabase(Constant.OracleConnectionName);
             DbCommand cmd = db.GetSqlStringCommand(sql);
             var row = db.ExecuteScalar(cmd);
             if (row != null)
@@ -77,9 +78,9 @@ namespace ErowSqlTransfer.DataAccess
         public static void TrunCateOracleTable(string tableName)
         {
             var sql = $"TRUNCATE TABLE {tableName.ToUpper()}";
-            Database db = DatabaseFactory.CreateDatabase(OracleConnectionName);
+            Database db = DatabaseFactory.CreateDatabase(Constant.OracleConnectionName);
             DbCommand cmd = db.GetSqlStringCommand(sql);
             db.ExecuteNonQuery(cmd);
-        }
+        }               
     }
 }

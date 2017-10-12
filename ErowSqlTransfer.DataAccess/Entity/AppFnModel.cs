@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace ErowSqlTransfer.DataAccess.Entity
 {
-    public class ExecuteResult
+    public class AppFnModel
     {
-        public int Id { get; set; }
+        public string FnCode { get; set; }
+
         public string TableName { get; set; }
 
-        public string Result { get; set; }
+        public int CurrentNumber { get; set; }
 
-        public string Error { get; set; }
-    }    
+        public string DjNoName { get; set; }
+    }
 }

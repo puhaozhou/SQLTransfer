@@ -46,8 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DalExecuteSql.cs" />
-    <Compile Include="Entity\ExecuteResult.cs" />
+    <Compile Include="DalSyncTable.cs" />
+    <Compile Include="DalSyncDjNo.cs" />
+    <Compile Include="DalSyncSequences.cs" />
+    <Compile Include="Entity\AppFnModel.cs" />
+    <Compile Include="Entity\Constant.cs" />
+    <Compile Include="Entity\SyncResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

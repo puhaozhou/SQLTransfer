@@ -52,8 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SqlManager.cs" />
+    <Compile Include="SyncTableManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncDjNoManager.cs" />
+    <Compile Include="SyncSequencesManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
