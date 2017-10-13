@@ -18,4 +18,68 @@ System.Data.OracleClient.OracleException (0x80131938): ORA-00904: "OILCARD_PRICE
    在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
    在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
    在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
-by phzby phz
+by phzby phzby phz记录时间：2017-10-12 17:14:45,336 线程ID:[4] 日志级别：ERROR 出错类：SyncTableManager property:[(null)] - 错误描述：adm_repair_apply_head插入数据出错
+System.InvalidCastException: 将参数值从 Guid 转换到 String 失败。 ---> System.InvalidCastException: 对象必须实现 IConvertible。
+   在 System.Convert.ChangeType(Object value, Type conversionType, IFormatProvider provider)
+   在 System.Data.OracleClient.OracleParameter.CoerceValue(Object value, MetaType destinationType)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Data.OracleClient.OracleParameter.CoerceValue(Object value, MetaType destinationType)
+   在 System.Data.OracleClient.OracleParameter.SetCoercedValueInternal(Object value, MetaType metaType)
+   在 System.Data.OracleClient.OracleParameterBinding.PrepareForBind(OracleConnection connection, Int32& offset)
+   在 System.Data.OracleClient.OracleCommand.Execute(OciStatementHandle statementHandle, CommandBehavior behavior, Boolean needRowid, OciRowidDescriptor& rowidDescriptor, ArrayList& resultParameterOrdinals)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQueryInternal(Boolean needRowid, OciRowidDescriptor& rowidDescriptor)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQuery()
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
+   在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
+by phzby phzby phz记录时间：2017-10-12 17:28:11,132 线程ID:[17] 日志级别：ERROR 出错类：SyncTableManager property:[(null)] - 错误描述：adm_sysdate插入数据出错
+System.Data.OracleClient.OracleException (0x80131938): ORA-00904: "SYSDATE_ID": invalid identifier
+
+   在 System.Data.OracleClient.OracleConnection.CheckError(OciErrorHandle errorHandle, Int32 rc)
+   在 System.Data.OracleClient.OracleCommand.Execute(OciStatementHandle statementHandle, CommandBehavior behavior, Boolean needRowid, OciRowidDescriptor& rowidDescriptor, ArrayList& resultParameterOrdinals)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQueryInternal(Boolean needRowid, OciRowidDescriptor& rowidDescriptor)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQuery()
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
+   在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
+记录时间：2017-10-12 17:28:17,564 线程ID:[9] 日志级别：ERROR 出错类：SyncTableManager property:[(null)] - 错误描述：adm_kilometer_adjust_head插入数据出错
+System.Data.OracleClient.OracleException (0x80131938): ORA-00904: "KILOMETER_ADJUST_ID": invalid identifier
+
+   在 System.Data.OracleClient.OracleConnection.CheckError(OciErrorHandle errorHandle, Int32 rc)
+   在 System.Data.OracleClient.OracleCommand.Execute(OciStatementHandle statementHandle, CommandBehavior behavior, Boolean needRowid, OciRowidDescriptor& rowidDescriptor, ArrayList& resultParameterOrdinals)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQueryInternal(Boolean needRowid, OciRowidDescriptor& rowidDescriptor)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQuery()
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
+   在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
+记录时间：2017-10-12 17:29:26,350 线程ID:[11] 日志级别：ERROR 出错类：SyncTableManager property:[(null)] - 错误描述：adm_driver_jb_head插入数据出错
+System.Data.OracleClient.OracleException (0x80131938): ORA-01722: invalid number
+
+   在 System.Data.OracleClient.OracleConnection.CheckError(OciErrorHandle errorHandle, Int32 rc)
+   在 System.Data.OracleClient.OracleCommand.Execute(OciStatementHandle statementHandle, CommandBehavior behavior, Boolean needRowid, OciRowidDescriptor& rowidDescriptor, ArrayList& resultParameterOrdinals)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQueryInternal(Boolean needRowid, OciRowidDescriptor& rowidDescriptor)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQuery()
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
+   在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
+记录时间：2017-10-12 17:30:01,939 线程ID:[11] 日志级别：ERROR 出错类：SyncTableManager property:[(null)] - 错误描述：adm_driver_jbjh_head插入数据出错
+System.Data.OracleClient.OracleException (0x80131938): ORA-00904: "DRIVER_JBJH_ID": invalid identifier
+
+   在 System.Data.OracleClient.OracleConnection.CheckError(OciErrorHandle errorHandle, Int32 rc)
+   在 System.Data.OracleClient.OracleCommand.Execute(OciStatementHandle statementHandle, CommandBehavior behavior, Boolean needRowid, OciRowidDescriptor& rowidDescriptor, ArrayList& resultParameterOrdinals)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQueryInternal(Boolean needRowid, OciRowidDescriptor& rowidDescriptor)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQuery()
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
+   在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
+记录时间：2017-10-12 17:36:49,451 线程ID:[17] 日志级别：ERROR 出错类：SyncTableManager property:[(null)] - 错误描述：adm_yjrw_detail插入数据出错
+System.Data.OracleClient.OracleException (0x80131938): ORA-00904: "CAR_SPECIAL_CATEGORY_IDS": invalid identifier
+
+   在 System.Data.OracleClient.OracleConnection.CheckError(OciErrorHandle errorHandle, Int32 rc)
+   在 System.Data.OracleClient.OracleCommand.Execute(OciStatementHandle statementHandle, CommandBehavior behavior, Boolean needRowid, OciRowidDescriptor& rowidDescriptor, ArrayList& resultParameterOrdinals)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQueryInternal(Boolean needRowid, OciRowidDescriptor& rowidDescriptor)
+   在 System.Data.OracleClient.OracleCommand.ExecuteNonQuery()
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   在 Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command, DbTransaction transaction)
+   在 ErowSqlTransfer.Business.SyncTableManager.TransferTableData(String tableName, TableResult& item) 位置 C:\git\Code\ErowSqlTransfer\ErowSqlTransfer.Business\SyncTableManager.cs:行号 52
+by phzby phzby phzby phzby phzby phzby phz

@@ -15,7 +15,7 @@ namespace ErowSqlTransfer
         private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(Form1));
         public readonly  List<string> TableNamesList = new List<string>{ "adm_repair_apply_head" };
         public readonly List<string> SequenceNamesList = new List<string>{"SEQ_ADM_CAR"};
-        public readonly bool IsSyncAllTables = false;
+        public readonly bool IsSyncAllTables = true;
         public readonly bool IsSyncAllSequences = true;
         public readonly bool IsSequencesFilter = true;
 
@@ -29,6 +29,7 @@ namespace ErowSqlTransfer
         {
             BtnSyncData.Enabled = false;
             BtnSyncSequence.Enabled = false;
+            SyncDjNo.Enabled = false;
             TotalNum.Text = "0";
             NumTransfered.Text = "0";
             textBox1.Clear();
@@ -40,6 +41,7 @@ namespace ErowSqlTransfer
         {
             BtnSyncData.Enabled = false;
             BtnSyncSequence.Enabled = false;
+            SyncDjNo.Enabled = false;
             TotalNum.Text = "0";
             NumTransfered.Text = "0";
             textBox1.Clear();
@@ -51,6 +53,7 @@ namespace ErowSqlTransfer
         {
             BtnSyncData.Enabled = false;
             BtnSyncSequence.Enabled = false;
+            SyncDjNo.Enabled = false;
             TotalNum.Text = "0";
             NumTransfered.Text = "0";
             textBox1.Clear();
@@ -101,6 +104,7 @@ namespace ErowSqlTransfer
             MessageBox.Show(@"同步完成，请查看同步报告");
             BtnSyncData.Enabled = true;
             BtnSyncSequence.Enabled = true;
+            SyncDjNo.Enabled = true;
         }
 
         public void SyncSequences()
@@ -109,16 +113,15 @@ namespace ErowSqlTransfer
             var result = new SyncResult();
             try
             {
-                var sequenceNames = IsSyncAllSequences ? manager.GetSequenceNames() : SequenceNamesList;
-                TotalNum.Text = sequenceNames.Where(p => !string.IsNullOrEmpty(p)).ToList().Count.ToString();
-                progressBar1.Minimum = 0;
-                progressBar1.Maximum = sequenceNames.Count;
-                progressBar1.Value = 0;
                 Func<string, bool> seqFilter;
                 if (IsSequencesFilter)
                 {
                     seqFilter = (name) =>
                     {
+                        if (string.IsNullOrWhiteSpace(name))
+                        {
+                            return false;
+                        }
                         var tableName = name.ToUpper().Replace("SEQ_", "");
                         var tabNamePrefix = tableName.Split('_')[0];
                         return !tabNamePrefix.ToUpper().Equals("T");
@@ -128,6 +131,11 @@ namespace ErowSqlTransfer
                 {
                     seqFilter = (name) => true;
                 }
+                var sequenceNames = IsSyncAllSequences ? manager.GetSequenceNames() : SequenceNamesList;
+                TotalNum.Text = sequenceNames.Where(seqFilter).ToList().Count.ToString();
+                progressBar1.Minimum = 0;
+                progressBar1.Maximum = sequenceNames.Where(seqFilter).ToList().Count;
+                progressBar1.Value = 0;               
                 //最大并行度
                 var o = new ParallelOptions { MaxDegreeOfParallelism = 10 };
                 Parallel.ForEach(sequenceNames.Where(seqFilter), o, (seqName) =>
@@ -156,6 +164,7 @@ namespace ErowSqlTransfer
             MessageBox.Show(@"同步完成，请查看同步报告");
             BtnSyncData.Enabled = true;
             BtnSyncSequence.Enabled = true;
+            SyncDjNo.Enabled = true;
         }
 
         public void SyncDjNos()
@@ -201,6 +210,7 @@ namespace ErowSqlTransfer
             MessageBox.Show(@"同步完成，请查看同步报告");
             BtnSyncData.Enabled = true;
             BtnSyncSequence.Enabled = true;
+            SyncDjNo.Enabled = true;
         }        
     }
 }

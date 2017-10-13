@@ -142,7 +142,7 @@ namespace ErowSqlTransfer.Business
                         db.AddInParameter(cmd, $":{col.Item1}", DbType.Date, dr[col.Item1]);
                         break;
                     case "Guid":
-                        db.AddInParameter(cmd, $":{col.Item1}", DbType.Guid, dr[col.Item1]);
+                        db.AddInParameter(cmd, $":{col.Item1}", DbType.String, dr[col.Item1]?.ToString().ToUpper());
                         break;
                     default:
                         db.AddInParameter(cmd, $":{col.Item1}", DbType.String, dr[col.Item1]);

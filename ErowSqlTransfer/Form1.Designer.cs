@@ -88,7 +88,7 @@ namespace ErowSqlTransfer
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 126);
+            this.label3.Location = new System.Drawing.Point(57, 126);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(17, 18);
             this.label3.TabIndex = 7;
@@ -97,7 +97,7 @@ namespace ErowSqlTransfer
             // TotalNum
             // 
             this.TotalNum.AutoSize = true;
-            this.TotalNum.Location = new System.Drawing.Point(58, 126);
+            this.TotalNum.Location = new System.Drawing.Point(96, 126);
             this.TotalNum.Name = "TotalNum";
             this.TotalNum.Size = new System.Drawing.Size(17, 18);
             this.TotalNum.TabIndex = 8;
