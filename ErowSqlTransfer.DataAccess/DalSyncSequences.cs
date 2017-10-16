@@ -107,7 +107,7 @@ namespace ErowSqlTransfer.DataAccess
             Database db = DatabaseFactory.CreateDatabase(Constant.OracleConnectionName);
             DbCommand cmd = db.GetSqlStringCommand(dropTemplete);
             db.ExecuteNonQuery(cmd);
-            cmd = db.GetSqlStringCommand(string.Format(createTemplete, seqName.ToUpper(), idValue));
+            cmd = db.GetSqlStringCommand(string.Format(createTemplete, seqName.ToUpper(), idValue + 1));
             db.ExecuteNonQuery(cmd);
         }
     }
