@@ -13,11 +13,11 @@ namespace ErowSqlTransfer
     public partial class Form1 : Form
     {
         private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(Form1));
-        public readonly  List<string> TableNamesList = new List<string>{ "adm_repair_apply_head" };
+        public readonly  List<string> TableNamesList = new List<string>{ "adm_car_serviceteam" };
         public readonly List<string> SequenceNamesList = new List<string>{"SEQ_ADM_CAR"};
         public readonly bool IsSyncAllTables = true;
         public readonly bool IsSyncAllSequences = true;
-        public readonly bool IsSequencesFilter = true;
+        public readonly bool IsUseSequencesFilter = true;
 
         public Form1()
         {
@@ -114,7 +114,7 @@ namespace ErowSqlTransfer
             try
             {
                 Func<string, bool> seqFilter;
-                if (IsSequencesFilter)
+                if (IsUseSequencesFilter)
                 {
                     seqFilter = (name) =>
                     {

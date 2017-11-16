@@ -26,7 +26,7 @@ namespace ErowSqlTransfer.DataAccess
                 AppFnModel item = new AppFnModel
                 {
                     FnCode = dr["FN_CODE"].ToString(),
-                    CurrentNumber = Convert.ToInt32(dr["CURRENT_NUM"]),
+                    CurrentNumber = dr["CURRENT_NUM"] != DBNull.Value ? Convert.ToInt32(dr["CURRENT_NUM"]) : 0,
                     DjNoName = dr["DJ_NO_NAME"].ToString(),
                     TableName = dr["TABLE_NAME"].ToString()
                 };

@@ -72,7 +72,7 @@ namespace ErowSqlTransfer
             this.BtnSyncSequence.Name = "BtnSyncSequence";
             this.BtnSyncSequence.Size = new System.Drawing.Size(117, 65);
             this.BtnSyncSequence.TabIndex = 3;
-            this.BtnSyncSequence.Text = "同步队列";
+            this.BtnSyncSequence.Text = "同步序列";
             this.BtnSyncSequence.UseVisualStyleBackColor = true;
             this.BtnSyncSequence.Click += new System.EventHandler(this.BtnSyncSequence_Click);
             // 
