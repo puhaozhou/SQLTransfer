@@ -81,6 +81,42 @@ namespace ErowSqlTransfer.DataAccess
             Database db = DatabaseFactory.CreateDatabase(Constant.OracleConnectionName);
             DbCommand cmd = db.GetSqlStringCommand(sql);
             db.ExecuteNonQuery(cmd);
-        }               
+        }
+
+        public static List<TableColumns> GetOracleTableColumns(string tableNames)
+        {
+            var result = new List<TableColumns>();
+            var sql = @"SELECT column_name, 
+                               data_type,
+                               table_name
+                        FROM user_tab_columns utc,
+                        Table(SYS.ODCIVARCHAR2LIST(:pTableNames,',')) tmp
+                        where utc.table_name = tmp.column_value";
+            Database db = DatabaseFactory.CreateDatabase(Constant.OracleConnectionName);
+            DbCommand cmd = db.GetSqlStringCommand(sql);
+            db.AddInParameter(cmd,":pTableNames",DbType.String,tableNames.ToUpper());
+            var dt = db.ExecuteDataSet(cmd)?.Tables[0] ?? new DataTable();
+            if (dt.Rows.Count.Equals(0))
+            {
+                return result;
+            }
+            var data = dt.AsEnumerable().GroupBy(p => p["table_name"].ToString()).ToDictionary(o=>o.Key, o=>o.Select(t=>t));
+            foreach (var item in data)
+            {
+                var list = new TableColumns();
+                list.TableName = item.Key;
+                foreach (var value in item.Value )
+                {
+                    var tableInfo = new TableInfo
+                    {
+                        ColumnName = value["column_name"].ToString(),
+                        DataType = value["data_type"].ToString()
+                    };
+                    list.TableInfos.Add(tableInfo);
+                }
+                result.Add(list);
+            }
+            return result;
+        }
     }
 }

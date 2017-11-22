@@ -52,6 +52,7 @@
     <Compile Include="Entity\AppFnModel.cs" />
     <Compile Include="Entity\Constant.cs" />
     <Compile Include="Entity\SyncResult.cs" />
+    <Compile Include="Entity\TableColumns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

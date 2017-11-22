@@ -10,16 +10,23 @@ using System.Threading.Tasks;
 
 namespace ErowSqlTransfer
 {
-    public partial class Form1 : Form
+    public partial class ErowSqlTransfer : Form
     {
-        private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(Form1));
-        public readonly  List<string> TableNamesList = new List<string>{ "adm_car_serviceteam" };
+        private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(ErowSqlTransfer));
         public readonly List<string> SequenceNamesList = new List<string>{"SEQ_ADM_CAR"};
-        public readonly bool IsSyncAllTables = true;
         public readonly bool IsSyncAllSequences = true;
         public readonly bool IsUseSequencesFilter = true;
 
-        public Form1()
+        private void groupBox1_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.Clear(this.BackColor);
+        }
+
+        private List<string> TableNamesList => TableNames.Text?.Split(',').AsEnumerable().ToList() ?? new List<string>();
+
+        private bool IsSyncAllTables => !IsSyncTables.Checked;
+
+        public ErowSqlTransfer()
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
@@ -61,8 +68,16 @@ namespace ErowSqlTransfer
             thread.Start();
         }
 
+        /// <summary>
+        /// 同步数据表
+        /// </summary>
         public void SyncTables()
         {
+            if (!IsSyncAllTables && !TableNamesList.Any())
+            {
+                MessageBox.Show(@"表名不能为空");
+                return;
+            }
             var manager = new SyncTableManager();
             var result = new SyncResult();
             try
@@ -73,6 +88,11 @@ namespace ErowSqlTransfer
                 progressBar1.Minimum = 0;
                 progressBar1.Maximum = tableNames.Count;
                 progressBar1.Value = 0;
+                if (UseOracleColumn.Checked)
+                {
+                    manager.OracleTablesInfo = manager.GetAllOracleTablesInfo(string.Join(", ", tableNames.AsEnumerable()));
+                }
+                manager.IsUseOracleColumn = UseOracleColumn.Checked;
                 //最大并行度
                 var o = new ParallelOptions { MaxDegreeOfParallelism = 10 };
                 Parallel.ForEach(tableNames, o, (tableName) =>
@@ -211,6 +231,6 @@ namespace ErowSqlTransfer
             BtnSyncData.Enabled = true;
             BtnSyncSequence.Enabled = true;
             SyncDjNo.Enabled = true;
-        }        
+        }
     }
 }

@@ -16,59 +16,76 @@ namespace ErowSqlTransfer.Business
     {
         private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(SyncTableManager));
 
+        private readonly List<string> OracleSpecialColumnName = new List<string>{ "APPLICANT_USER_ID" };
+
+        public bool IsUseOracleColumn { get; set; }
+
+        public List<TableColumns> OracleTablesInfo { get; set; }
+
         public void TransferTableData(string tableName, ref TableResult item)
         {
-            item.TableName = tableName.ToUpper();
-            item.SyncResult = "success";
-            if (DalSyncTable.IsExistOracleTable(tableName)) //判断Oracle中是否存在该表
+            try
             {
-                DalSyncTable.TrunCateOracleTable(tableName); //清空表内数据
-            }
-            else
-            {
-                item.SyncResult = $"表{tableName.ToUpper()}在Oracle中不存在";
-                return;
-            }
-            var ctData = DalSyncTable.GetCtDataByTableName(tableName);
-            if (ctData != null && ctData.Tables[0].Rows.Count > 0)
-            {
-                var columnInfo = GetTableColumnNameAndDataType(ctData);
-                Database db = DatabaseFactory.CreateDatabase("OracleConn"); //链接到Oracle
-                using (DbConnection connection = db.CreateConnection())
+                item.TableName = tableName.ToUpper();
+                item.SyncResult = "success";
+                if (DalSyncTable.IsExistOracleTable(tableName)) //判断Oracle中是否存在该表
                 {
-                    connection.Open();
-                    using (var transaction = connection.BeginTransaction())
+                    DalSyncTable.TrunCateOracleTable(tableName); //清空表内数据
+                }
+                else
+                {
+                    item.SyncResult = $"表{tableName.ToUpper()}在Oracle中不存在";
+                    return;
+                }
+                var ctData = DalSyncTable.GetCtDataByTableName(tableName);
+                if (ctData != null && ctData.Tables[0].Rows.Count > 0)
+                {
+                    var mssqlColumnInfo = GetTableColumnNameAndDataType(ctData);
+                    var oracleColumnInfo = IsUseOracleColumn ? GetOracleTablesInfo(tableName, mssqlColumnInfo) : null;
+                    var columnInfo = IsUseOracleColumn ? oracleColumnInfo : mssqlColumnInfo;
+                    Database db = DatabaseFactory.CreateDatabase("OracleConn"); //链接到Oracle
+                    using (DbConnection connection = db.CreateConnection())
                     {
-                        try
+                        connection.Open();
+                        using (var transaction = connection.BeginTransaction())
                         {
-                            foreach (DataRow dr in ctData.Tables[0].Rows)
+                            try
                             {
-                                var sql = GenerateSql(tableName,
-                                    columnInfo.Select(p => p.Item1).AsEnumerable()); //生成sql
-                                if (!string.IsNullOrWhiteSpace(sql))
+                                foreach (DataRow dr in ctData.Tables[0].Rows)
                                 {
-                                    DbCommand cmd = db.GetSqlStringCommand(sql);
-                                    AppendDbParameters(db, cmd, dr, columnInfo); //绑定参数
-                                    db.ExecuteNonQuery(cmd, transaction);
+                                    var sql = GenerateSql(tableName,
+                                        columnInfo.Select(p => p.Item1).AsEnumerable()); //生成sql
+                                    if (!string.IsNullOrWhiteSpace(sql))
+                                    {
+                                        DbCommand cmd = db.GetSqlStringCommand(sql);
+                                        AppendDbParameters(db, cmd, dr, columnInfo); //绑定参数
+                                        db.ExecuteNonQuery(cmd, transaction);
+                                    }
                                 }
+                                transaction.Commit();
                             }
-                            transaction.Commit();
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                _logger.Error($"{tableName}插入数据出错", ex);
+                                item.SyncResult = "Fail";
+                                item.SyncError = ex.Message;
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            transaction.Rollback();
-                            _logger.Error($"{tableName}插入数据出错", ex);
-                            item.SyncResult = "Fail";
-                            item.SyncError = ex.Message;
-                        }
+                        connection.Close();
                     }
-                    connection.Close();
+                }
+                else
+                {
+                    item.SyncResult = $"表{item.SyncError}在Sql Server中暂无数据";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                item.SyncResult = $"表{item.SyncError}在Sql Server中暂无数据";
-            }
+                _logger.Error(ex);
+                item.SyncResult = "Fail";
+                item.SyncError = ex.Message;
+            }         
         }        
 
         public List<string> GetTableNames()
@@ -149,6 +166,40 @@ namespace ErowSqlTransfer.Business
                         break;
                 }
             }
-        }                               
+        }
+
+        public List<TableColumns> GetAllOracleTablesInfo(string tableNames)
+        {
+            List<TableColumns> result = new List<TableColumns>();
+            try
+            {
+                result = DalSyncTable.GetOracleTableColumns(tableNames);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 只取Oracle中有的字段
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="mssqlColumns"></param>
+        /// <returns></returns>
+        public List<Tuple<string, Type>> GetOracleTablesInfo(string tableName, List<Tuple<string, Type>> mssqlColumns)
+        {
+            IEnumerable<string> oracleColumns = new List<string>();
+            var data = OracleTablesInfo.Where(p=>p.TableName.Equals(tableName.ToUpper())); //获取Oracle的表结构
+            if (data.Any())
+            {
+                var columns = data.FirstOrDefault()?.TableInfos;
+                if (columns != null && columns.Any())
+                    oracleColumns = columns.Select(p => p.ColumnName.ToUpper());
+            }
+            var result = mssqlColumns.Where(p => oracleColumns.Contains(p.Item1.ToUpper())).ToList();
+            return result;
+        }
     }
 }
