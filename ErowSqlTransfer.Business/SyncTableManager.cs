@@ -9,6 +9,8 @@ using System.Xml.Serialization;
 using ErowSqlTransfer.DataAccess;
 using ErowSqlTransfer.DataAccess.Entity;
 using Microsoft.Practices.EnterpriseLibrary.Data;
+using Oracle.DataAccess.Client;
+using System.Configuration;
 
 namespace ErowSqlTransfer.Business
 {
@@ -43,36 +45,40 @@ namespace ErowSqlTransfer.Business
                     var mssqlColumnInfo = GetTableColumnNameAndDataType(ctData);
                     var oracleColumnInfo = IsUseOracleColumn ? GetOracleTablesInfo(tableName, mssqlColumnInfo) : null;
                     var columnInfo = IsUseOracleColumn ? oracleColumnInfo : mssqlColumnInfo;
-                    Database db = DatabaseFactory.CreateDatabase("OracleConn"); //链接到Oracle
-                    using (DbConnection connection = db.CreateConnection())
+                    //Database db = DatabaseFactory.CreateDatabase("OracleConn"); //链接到Oracle
+                    var conStr = ConfigurationManager.ConnectionStrings["OracleConnStr"].ConnectionString;
+                    var sql = GenerateSql(tableName, columnInfo?.Select(p => p.Item1).AsEnumerable()); //生成sql
+                    using (OracleConnection conn = new OracleConnection(conStr))
                     {
-                        connection.Open();
-                        using (var transaction = connection.BeginTransaction())
+                        conn.Open();
+
+                        using (OracleCommand cmd = conn.CreateCommand())
                         {
+                            cmd.ArrayBindCount = ctData.Tables[0].Rows.Count;
+                            cmd.BindByName = true;
+                            cmd.CommandType = CommandType.Text;
+                            cmd.CommandText = sql;
+                            //cmd.CommandTimeout = 600;//10分钟
+                            var trans = conn.BeginTransaction();
                             try
                             {
-                                foreach (DataRow dr in ctData.Tables[0].Rows)
+                                if (!string.IsNullOrWhiteSpace(sql))
                                 {
-                                    var sql = GenerateSql(tableName,
-                                        columnInfo.Select(p => p.Item1).AsEnumerable()); //生成sql
-                                    if (!string.IsNullOrWhiteSpace(sql))
-                                    {
-                                        DbCommand cmd = db.GetSqlStringCommand(sql);
-                                        AppendDbParameters(db, cmd, dr, columnInfo); //绑定参数
-                                        db.ExecuteNonQuery(cmd, transaction);
-                                    }
+                                    GenerateOracleParameter(cmd, ctData.Tables[0], columnInfo);
+                                    cmd.Transaction = trans;
+                                    cmd.ExecuteNonQuery();
+                                    trans.Commit();
                                 }
-                                transaction.Commit();
                             }
                             catch (Exception ex)
                             {
-                                transaction.Rollback();
+                                trans.Rollback();
                                 _logger.Error($"{tableName}插入数据出错", ex);
                                 item.SyncResult = "Fail";
                                 item.SyncError = ex.Message;
                             }
                         }
-                        connection.Close();
+                        conn.Close();
                     }
                 }
                 else
@@ -85,8 +91,61 @@ namespace ErowSqlTransfer.Business
                 _logger.Error(ex);
                 item.SyncResult = "Fail";
                 item.SyncError = ex.Message;
-            }         
-        }        
+            }
+        }
+
+        public void GenerateOracleParameter(OracleCommand cmd, DataTable dt, List<Tuple<string, Type>> columnInfo)
+        {
+            var totalCount = dt.Rows.Count;
+            foreach (var col in columnInfo)
+            {
+                OracleDbType dataType;
+                object value;
+                switch (col.Item2.Name)
+                {
+                    case "Int32":
+                        dataType = OracleDbType.Varchar2;
+                        var intValue = new string[totalCount];
+                        for (var i = 0; i < totalCount; i++)
+                        {
+                            intValue[i] = dt.Rows[i][col.Item1]?.ToString();
+                        }
+                        value = intValue;
+                        break;
+                    case "DateTime":
+                        dataType = OracleDbType.TimeStamp;
+                        var dateValue = new DateTime?[totalCount];
+                        for (var i = 0; i < totalCount; i++)
+                        {
+                            dateValue[i] = !dt.Rows[i][col.Item1].Equals(DBNull.Value) ? Convert.ToDateTime(dt.Rows[i][col.Item1]) : (DateTime?) null;
+                        }
+                        value = dateValue;
+                        break;
+                    case "Guid":
+                        dataType = OracleDbType.Varchar2;
+                        var guidValue = new string[totalCount];
+                        for (var i = 0; i < totalCount; i++)
+                        {
+                            guidValue[i] = dt.Rows[i][col.Item1]?.ToString().ToUpper();
+                        }
+                        value = guidValue;
+                        break;
+                    default:
+                        dataType = OracleDbType.Varchar2;
+                        var defaultValue = new string[totalCount];
+                        for (var i = 0; i < totalCount; i++)
+                        {
+                            defaultValue[i] = dt.Rows[i][col.Item1]?.ToString();
+                        }
+                        value = defaultValue;
+                        break;
+                }
+                var oracleParameter = new OracleParameter(col.Item1, dataType);
+                oracleParameter.Direction = ParameterDirection.Input;
+                oracleParameter.Value = value;
+                cmd.Parameters.Add(oracleParameter);
+            }
+        }
 
         public List<string> GetTableNames()
         {

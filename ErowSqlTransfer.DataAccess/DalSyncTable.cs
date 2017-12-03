@@ -12,7 +12,7 @@ namespace ErowSqlTransfer.DataAccess
 {
     public class DalSyncTable
     {
-        public static readonly string[] Heads = {"ADM"};
+        public static readonly string[] Heads = {"CT","JXC","HR"};
 
         /// <summary>
         /// 获取库ct_ct中ct和jxc的表名
@@ -27,13 +27,20 @@ namespace ErowSqlTransfer.DataAccess
             DataSet ds = db.ExecuteDataSet(cmd);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                foreach (var head in Heads)
+                if (Heads != null && Heads.Any())
                 {
-                    if (dr["name"].ToString().Length >= head.Length &&
-                        dr["name"].ToString().Substring(0, head.Length).ToUpper().Equals(head))
+                    foreach (var head in Heads)
                     {
-                        result.Add(dr["name"].ToString());
+                        if (dr["name"].ToString().Length >= head.Length &&
+                            dr["name"].ToString().Substring(0, head.Length).ToUpper().Equals(head))
+                        {
+                            result.Add(dr["name"].ToString());
+                        }
                     }
+                }
+                else
+                {
+                    result.Add(dr["name"].ToString());
                 }
             }
             return result.OrderBy(p=>p).ToList();
@@ -46,13 +53,20 @@ namespace ErowSqlTransfer.DataAccess
         /// <returns></returns>
         public static DataSet GetCtDataByTableName(string tableName)
         {
-            foreach (var head in Heads)
+            if (Heads != null && Heads.Any())
             {
-                if (tableName.Length >= head.Length && 
-                    tableName.Substring(0, head.Length).ToUpper().Equals(head))
+                foreach (var head in Heads)
                 {
-                    tableName = head.ToLower() + "." + tableName;
+                    if (tableName.Length >= head.Length &&
+                        tableName.Substring(0, head.Length).ToUpper().Equals(head))
+                    {
+                        tableName = head.ToLower() + "." + tableName;
+                    }
                 }
+            }
+            else
+            {
+                tableName = tableName.Split('_')[0] + "." + tableName;//表头要加上
             }
             var sql = $"SELECT * FROM {tableName} WITH (NOLOCK)";
             Database db = DatabaseFactory.CreateDatabase(Constant.SqlConnectionName);
