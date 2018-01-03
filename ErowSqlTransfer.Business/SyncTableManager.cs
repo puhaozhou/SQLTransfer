@@ -46,7 +46,7 @@ namespace ErowSqlTransfer.Business
                     var oracleColumnInfo = IsUseOracleColumn ? GetOracleTablesInfo(tableName, mssqlColumnInfo) : null;
                     var columnInfo = IsUseOracleColumn ? oracleColumnInfo : mssqlColumnInfo;
                     //Database db = DatabaseFactory.CreateDatabase("OracleConn"); //链接到Oracle
-                    var conStr = ConfigurationManager.ConnectionStrings["OracleConnStr"].ConnectionString;
+                    var conStr = ConfigurationManager.ConnectionStrings["OracleConnStr"].ConnectionString;//获取oracle连接字符串
                     var sql = GenerateSql(tableName, columnInfo?.Select(p => p.Item1).AsEnumerable()); //生成sql
                     using (OracleConnection conn = new OracleConnection(conStr))
                     {
@@ -94,6 +94,12 @@ namespace ErowSqlTransfer.Business
             }
         }
 
+        /// <summary>
+        /// 绑定数据
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="dt"></param>
+        /// <param name="columnInfo"></param>
         public void GenerateOracleParameter(OracleCommand cmd, DataTable dt, List<Tuple<string, Type>> columnInfo)
         {
             var totalCount = dt.Rows.Count;
@@ -147,6 +153,10 @@ namespace ErowSqlTransfer.Business
             }
         }
 
+        /// <summary>
+        /// 获取oracle中表名
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetTableNames()
         {
             var result = new List<string>();
@@ -161,6 +171,11 @@ namespace ErowSqlTransfer.Business
             return result;
         }        
 
+        /// <summary>
+        /// 获取sql server 表结构和字段类型
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public List<Tuple<string,Type>> GetTableColumnNameAndDataType(DataSet data)
         {
             List<Tuple<string, Type>> result = new List<Tuple<string, Type>>();
@@ -181,6 +196,12 @@ namespace ErowSqlTransfer.Business
             return result;
         }
 
+        /// <summary>
+        /// 生成insert sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnInfo"></param>
+        /// <returns></returns>
         public string GenerateSql(string tableName, IEnumerable<string> columnInfo)
         {
             string sql = string.Empty;
@@ -227,6 +248,11 @@ namespace ErowSqlTransfer.Business
             }
         }
 
+        /// <summary>
+        /// 查询oracle中的表结构
+        /// </summary>
+        /// <param name="tableNames"></param>
+        /// <returns></returns>
         public List<TableColumns> GetAllOracleTablesInfo(string tableNames)
         {
             List<TableColumns> result = new List<TableColumns>();
