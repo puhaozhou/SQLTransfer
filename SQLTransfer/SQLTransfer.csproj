@@ -97,13 +97,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ErowSqlTransfer.Business\ErowSqlTransfer.Business.csproj">
+    <ProjectReference Include="..\SQLTransfer.Business\SQLTransfer.Business.csproj">
       <Project>{3d11e490-805e-4271-8438-94abdfe4a2b5}</Project>
-      <Name>ErowSqlTransfer.Business</Name>
+      <Name>SQLTransfer.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ErowSqlTransfer.DataAccess\ErowSqlTransfer.DataAccess.csproj">
+    <ProjectReference Include="..\SQLTransfer.DataAccess\SQLTransfer.DataAccess.csproj">
       <Project>{71ef8332-c88c-4055-aff4-6b27898943b4}</Project>
-      <Name>ErowSqlTransfer.DataAccess</Name>
+      <Name>SQLTransfer.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
