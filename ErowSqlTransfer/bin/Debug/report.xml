@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-16"?>
-<ArrayOfExecuteResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ExecuteResult>
-    <Id>0</Id>
-    <TableName>JXC_CGQG_HEAD</TableName>
-    <Result>Success</Result>
-  </ExecuteResult>
-</ArrayOfExecuteResult>

@@ -1,5 +1,0 @@
-C:\git\ErowSqlTransfer\Erow.Component.FrameWork\bin\Debug\Erow.Component.FrameWork.dll
-C:\git\ErowSqlTransfer\Erow.Component.FrameWork\bin\Debug\Erow.Component.FrameWork.pdb
-C:\git\ErowSqlTransfer\Erow.Component.FrameWork\obj\Debug\Erow.Component.FrameWork.csprojResolveAssemblyReference.cache
-C:\git\ErowSqlTransfer\Erow.Component.FrameWork\obj\Debug\Erow.Component.FrameWork.dll
-C:\git\ErowSqlTransfer\Erow.Component.FrameWork\obj\Debug\Erow.Component.FrameWork.pdb
