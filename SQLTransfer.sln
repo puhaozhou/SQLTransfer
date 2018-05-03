@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErowSqlTransfer", "ErowSqlTransfer\ErowSqlTransfer.csproj", "{9DB42476-B22C-49F4-98E9-F705C9593857}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLTransfer", "SQLTransfer\SQLTransfer.csproj", "{9DB42476-B22C-49F4-98E9-F705C9593857}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErowSqlTransfer.Business", "ErowSqlTransfer.Business\ErowSqlTransfer.Business.csproj", "{3D11E490-805E-4271-8438-94ABDFE4A2B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLTransfer.Business", "SQLTransfer.Business\SQLTransfer.Business.csproj", "{3D11E490-805E-4271-8438-94ABDFE4A2B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErowSqlTransfer.DataAccess", "ErowSqlTransfer.DataAccess\ErowSqlTransfer.DataAccess.csproj", "{71EF8332-C88C-4055-AFF4-6B27898943B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLTransfer.DataAccess", "SQLTransfer.DataAccess\SQLTransfer.DataAccess.csproj", "{71EF8332-C88C-4055-AFF4-6B27898943B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
