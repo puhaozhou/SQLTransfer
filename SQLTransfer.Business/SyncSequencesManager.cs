@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ErowSqlTransfer.DataAccess;
-using ErowSqlTransfer.DataAccess.Entity;
+using SQLTransfer.DataAccess;
+using SQLTransfer.DataAccess.Entity;
 
-namespace ErowSqlTransfer.Business
+namespace SQLTransfer.Business
 {
     public class SyncSequencesManager
     {

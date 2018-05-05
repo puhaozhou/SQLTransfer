@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
-using ErowSqlTransfer.DataAccess;
-using ErowSqlTransfer.DataAccess.Entity;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Oracle.DataAccess.Client;
-using System.Configuration;
+using SQLTransfer.DataAccess;
+using SQLTransfer.DataAccess.Entity;
 
-namespace ErowSqlTransfer.Business
+namespace SQLTransfer.Business
 {
     public class SyncTableManager
     {
