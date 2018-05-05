@@ -13,7 +13,7 @@ namespace ErowSqlTransfer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ErowSqlTransfer());
+            Application.Run(new MainPage());
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ErowSqlTransfer
 {
-    partial class ErowSqlTransfer
+    partial class MainPage
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -230,8 +230,8 @@ namespace ErowSqlTransfer
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.BtnSyncData);
-            this.Name = "ErowSqlTransfer";
-            this.Text = "ErowSqlTransfer";
+            this.Name = "SQLTransfer";
+            this.Text = "SQLTransfer";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
