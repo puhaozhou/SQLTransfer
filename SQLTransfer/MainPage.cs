@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace ErowSqlTransfer
 {
-    public partial class ErowSqlTransfer : Form
+    public partial class MainPage : Form
     {
-        private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(ErowSqlTransfer));
+        private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(nameof(MainPage));
         public readonly List<string> SequenceNamesList = new List<string>{"SEQ_ADM_CAR"};
         public readonly bool IsSyncAllSequences = true;
         public readonly bool IsUseSequencesFilter = true;
@@ -26,7 +26,7 @@ namespace ErowSqlTransfer
 
         private bool IsSyncAllTables => !IsSyncTables.Checked;
 
-        public ErowSqlTransfer()
+        public MainPage()
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
