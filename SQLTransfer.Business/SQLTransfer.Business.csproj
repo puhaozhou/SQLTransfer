@@ -7,8 +7,8 @@
     <ProjectGuid>{3D11E490-805E-4271-8438-94ABDFE4A2B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErowSqlTransfer.Business</RootNamespace>
-    <AssemblyName>ErowSqlTransfer.Business</AssemblyName>
+    <RootNamespace>SQLTransfer.Business</RootNamespace>
+    <AssemblyName>SQLTransfer.Business</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ErowSqlTransfer
+namespace SQLTransfer
 {
     static class Program
     {

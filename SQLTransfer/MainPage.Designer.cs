@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace ErowSqlTransfer
+namespace SQLTransfer
 {
     partial class MainPage
     {

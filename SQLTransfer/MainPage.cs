@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Diagnostics;
-using System.Windows.Forms;
-using ErowSqlTransfer.Business;
-using ErowSqlTransfer.DataAccess.Entity;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using SQLTransfer.Business;
+using SQLTransfer.DataAccess.Entity;
 
-namespace ErowSqlTransfer
+namespace SQLTransfer
 {
     public partial class MainPage : Form
     {
