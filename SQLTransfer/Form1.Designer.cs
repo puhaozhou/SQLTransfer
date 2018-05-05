@@ -1,4 +1,4 @@
-﻿namespace ErowSqlTransfer
+﻿namespace SQLTransfer
 {
     partial class Form1
     {

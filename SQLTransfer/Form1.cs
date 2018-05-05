@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using ErowSqlTransfer.Business;
-using ErowSqlTransfer.DataAccess.Entity;
-using Newtonsoft.Json;
+using SQLTransfer.Business;
+using SQLTransfer.DataAccess.Entity;
 
-namespace ErowSqlTransfer
+namespace SQLTransfer
 {
     public partial class Form1 : Form
     {
